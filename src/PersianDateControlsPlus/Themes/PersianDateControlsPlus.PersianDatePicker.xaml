@@ -1,0 +1,185 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:PersianDateControlsPlus="clr-namespace:PersianDateControlsPlus">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="PersianDateControlsPlus.OpenCalendarButtonStyle"
+           TargetType="Button">
+        <Setter Property="SnapsToDevicePixels"
+                Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+                Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Border"
+                            CornerRadius="0"
+                            BorderThickness="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent">
+                        <ContentPresenter Margin="1,1,1,1"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="true">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource PersianDateControlsPlus.DefaultedBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsDefaulted"
+                                 Value="true">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource PersianDateControlsPlus.DefaultedBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{StaticResource PersianDateControlsPlus.HoverBackgroundBrush}" />
+                            <Setter  Property="Foreground"
+                                     Value="{StaticResource PersianDateControlsPlus.HoverForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="false">
+                            <Setter  Property="Foreground"
+                                     Value="{StaticResource PersianDateControlsPlus.ForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="false">
+                            <Setter  Property="Foreground"
+                                     Value="{StaticResource PersianDateControlsPlus.ForegroundBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{StaticResource PersianDateControlsPlus.PressedBrush}" />
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource PersianDateControlsPlus.PressedBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="false">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush"
+                                    Value="Transparent" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="PersianDateControlsPlus.TextBoxTemplate">
+        <Border Name="Border"
+                BorderThickness="1"
+                CornerRadius="1"
+                BorderBrush="{TemplateBinding BorderBrush}">
+            <ScrollViewer CanContentScroll="False"
+                          VerticalAlignment="Center"
+                          x:Name="PART_ContentHost"
+                          Padding="0"
+                          VerticalContentAlignment="Top" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter TargetName="Border"
+                        Property="BorderBrush"
+                        Value="{StaticResource PersianDateControlsPlus.TextBoxHoverBorderBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type PersianDateControlsPlus:PersianDatePicker}"
+                     x:Key="PersianDateControlsPlus.PersianDatePickerTemplate">
+        <Border BorderBrush="Gainsboro"
+                BorderThickness="1"
+                CornerRadius="1"
+                Height="25"
+                Width="115"
+                FlowDirection="RightToLeft"
+                Focusable="True"
+                KeyboardNavigation.TabNavigation="Once">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="PART_DateTextBoxElement"
+                         Margin="1"
+                         Padding="2,0,2,0"
+                         Grid.Column="0"
+                         Template="{DynamicResource PersianDateControlsPlus.TextBoxTemplate}"
+                         BorderBrush="Transparent"
+                         AcceptsReturn="False"
+                         FlowDirection="LeftToRight"
+                         HorizontalAlignment="Stretch"
+                         VerticalContentAlignment="Center"
+                         MaxLines="1" />
+                <TextBlock Margin="1"
+                           Padding="2,0,2,0"
+                           Grid.Column="0"
+                           IsHitTestVisible="False"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Text="{Binding PlaceHolder, RelativeSource={RelativeSource AncestorType={x:Type PersianDateControlsPlus:PersianDatePicker}}}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedDate, ElementName=PART_PersianCalendarElement}"
+                                             Value="{x:Null}">
+                                    <Setter Property="Visibility"
+                                            Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsFocused, ElementName=PART_DateTextBoxElement}"
+                                             Value="True">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <Button x:Name="PART_OpenCalendarButtonElement"
+                        Style="{DynamicResource PersianDateControlsPlus.OpenCalendarButtonStyle}"
+                        Grid.Column="1"
+                        Padding="0"
+                        Margin="1"
+                        Width="24"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Image Source="./../OpenCalendarButtonImage.bmp"
+                           Margin="0"
+                           Stretch="Uniform" />
+                </Button>
+                <Popup x:Name="PART_DatePickerPopupElement"
+                       HorizontalAlignment="Right"
+                       PlacementTarget="{Binding ElementName=PART_OpenCalendarButtonElement}"
+                       StaysOpen="False"
+                       Margin="0,22,-22,-12">
+                    <Grid Background="White">
+                        <PersianDateControlsPlus:PersianCalendar x:Name="PART_PersianCalendarElement"
+                                                             Height="160"
+                                                             Width="175" />
+                    </Grid>
+                </Popup>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type PersianDateControlsPlus:PersianDatePicker}">
+        <Setter Property="Template"
+                Value="{DynamicResource PersianDateControlsPlus.PersianDatePickerTemplate}" />
+
+    </Style>
+</ResourceDictionary>

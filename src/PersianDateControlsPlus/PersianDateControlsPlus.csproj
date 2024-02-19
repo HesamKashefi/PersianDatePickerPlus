@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon />
+		<StartupObject />
+		<AssemblyName>PersianDateControlsPlus</AssemblyName>
+		<RootNamespace>PersianDateControlsPlus</RootNamespace>
+		<Description>A Persian DatePicker Control For .NETCore WPF</Description>
+		<PackageProjectUrl>https://github.com/HesamKashefi/WPF_PersianDatePicker</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/HesamKashefi/WPF_PersianDatePicker</RepositoryUrl>
+		<RepositoryType>Public</RepositoryType>
+		<PackageTags>persiancalendar,persiandatepicker,persian,.net8,.net7,.net6,.net5,.netcore,wpf</PackageTags>
+		<Authors>HesamKasehfi,Mohsens22,Arash</Authors>
+		<Version>2.0.0-preview1</Version>
+		<Title>PersianDateControlsPlus</Title>
+		<CustomName>PersianDateControlsPlus</CustomName>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes>
+			Added ability to customize ui
+			Added ability to clear date (null value as selected date)
+			Added today button
+			Improvements
+		</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="OpenCalendarButtonImage.bmp" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="OpenCalendarButtonImage.bmp" />
+	</ItemGroup>
+	<Target Name="WorkaroundNetStandard" AfterTargets="ResolvePackageAssets">
+		<ItemGroup>
+			<TransitiveFrameworkReference Remove="NETStandard.Library" />
+		</ItemGroup>
+	</Target>
+
+</Project>

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-namespace Mohsen
+namespace PersianDateControlsPlus.PersianDate
 {
     //this attribute enables converting to/from this type in wpf and other designing environments
     [TypeConverter(typeof(PersianDateConverter))]
@@ -138,7 +135,7 @@ namespace Mohsen
         static int daysInYear(int m, int d)
         {
             if (m < 7) return (m - 1) * 31 + d - 1;
-            return (31 * 6) + (m - 7) * 30 + d - 1;
+            return 31 * 6 + (m - 7) * 30 + d - 1;
         }
         internal static uint days(int y, int m, int d)
         {
@@ -151,7 +148,7 @@ namespace Mohsen
             }
             else if (a <= 20)
             {
-                r += (uint)p33p1 + (uint)((a - 1) / 4) * period4y + (uint)((a - 1) % 4) * 365;
+                r += p33p1 + (uint)((a - 1) / 4) * period4y + (uint)((a - 1) % 4) * 365;
             }
             else if (a <= 21)
             {
@@ -159,7 +156,7 @@ namespace Mohsen
             }
             else
             {
-                r += (uint)(p33p1 + p33p2 + p33p3) + (uint)((a - 22) / 4) * period4y + (uint)((a - 22) % 4) * 365;
+                r += p33p1 + p33p2 + p33p3 + (uint)((a - 22) / 4) * period4y + (uint)((a - 22) % 4) * 365;
             }
             return r;
         }
@@ -180,7 +177,7 @@ namespace Mohsen
         public static bool IsLeapYear(int year)
         {
             int r = year % 33;
-            return (r == 1 || r == 5 || r == 9 || r == 13 || r == 17 || r == 22 || r == 26 || r == 30);
+            return r == 1 || r == 5 || r == 9 || r == 13 || r == 17 || r == 22 || r == 26 || r == 30;
         }
         public static PersianDate Today
         {
@@ -285,7 +282,7 @@ namespace Mohsen
         }
         public static PersianDate operator -(PersianDate persianDate, int days)
         {
-            return persianDate + (-days);
+            return persianDate + -days;
         }
         public static TimeSpan operator -(PersianDate x, PersianDate y)
         {
@@ -409,7 +406,7 @@ namespace Mohsen
         /// <param name="days">number of days to be added to the current PersianDate</param>
         public PersianDate AddDays(int days)
         {
-            return (this + days);
+            return this + days;
         }
 
         /// <summary>
@@ -451,7 +448,7 @@ namespace Mohsen
 
         public int CompareTo(PersianDate that)
         {
-            return this.n.CompareTo(that.n);
+            return n.CompareTo(that.n);
         }
 
         #endregion
