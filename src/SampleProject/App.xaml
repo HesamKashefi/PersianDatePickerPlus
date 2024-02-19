@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Mohsen.PersianDateControls;component/Themes/PersianDateControls.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/PersianDateControls;component/Themes/PersianDateControls.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

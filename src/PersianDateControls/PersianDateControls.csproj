@@ -2,21 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon />
     <StartupObject />
-    <AssemblyName>Mohsen.PersianDateControls</AssemblyName>
-    <RootNamespace>Mohsen.PersianDateControls</RootNamespace>
-    <Description>A Persian datepicker control for .NETCore WPF</Description>
-    <PackageProjectUrl>https://github.com/Mohsens22/PersianDatePicker.Core</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Mohsens22/PersianDatePicker.Core</RepositoryUrl>
+    <AssemblyName>PersianDateControls</AssemblyName>
+    <RootNamespace>PersianDateControls</RootNamespace>
+    <Description>A Persian DatePicker Control For .NETCore WPF</Description>
+    <PackageProjectUrl>https://github.com/HesamKashefi/WPF_PersianDatePicker</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/HesamKashefi/WPF_PersianDatePicker</RepositoryUrl>
     <RepositoryType>Public</RepositoryType>
-    <PackageTags>.netcore3,wpf,persiancalendar,persiandatepicker</PackageTags>
-    <Authors>Mohsens22,Arash</Authors>
-    <Company>Mohsens22</Company>
-    <Copyright>Copyleft 2019 Mohsen</Copyright>
-    <Version>1.0.1</Version>
+    <PackageTags>persiancalendar,persiandatepicker,persian,.net8,.net7,.net6,.net5,.netcore,wpf</PackageTags>
+    <Authors>HesamKasehfi,Mohsens22,Arash</Authors>
+    <Version>2.0.0-preview1</Version>
   </PropertyGroup>
 
   <ItemGroup>

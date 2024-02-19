@@ -1,8 +1,16 @@
 <p align="center">
-  <strong>A persian date picker for .netcore WPF</strong>
+  <strong>A Persian date picker for .NET WPF (.NET Core)</strong>
 </p>
-<p align="center">
-  <a href="http://nuget.org/List/Packages/Mohsen.PersianDateControls"><img alt="ManyConsole" src="https://img.shields.io/nuget/v/Mohsen.PersianDateControls.svg">
+
+## Build Status
+
+[![build](https://github.com/HesamKashefi/WPF_PersianDatePicker/actions/workflows/build.yml/badge.svg)](https://github.com/HesamKashefi/WPF_PersianDatePicker/actions/workflows/build.yml)
+
+## NuGet
+
+<p>
+  <a href="http://nuget.org/List/Packages/PersianDateControls">
+  <img alt="ManyConsole" src="https://img.shields.io/nuget/v/PersianDateControls.svg">
   </a>
 
 ## How to use
@@ -10,24 +18,24 @@
 First, install this package:
 
 ```ps
-Install-Package Mohsen.PersianDateControls
+Install-Package PersianDateControls
 ```
 
 Then add this code at the top of your Xaml:
 
 ```xaml
-xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls"
+xmlns:PersianDateControls="clr-namespace:PersianDateControls;assembly=PersianDateControls"
 ```
 
 then paste
 
 ```xaml
-<persianDateControls:PersianDatePicker />
+<PersianDateControls:PersianDatePicker />
 ```
 
 Whereever you wanted to use persian calender.
 
-A sample project is present [Here](https://github.com/Mohsens22/PersianDatePicker.Core/tree/master/src/SampleProject)
+A sample project is present [Here](https://github.com/HesamKashefi/WPF_PersianDatePicker/tree/master/src/SampleProject)
 
 ![image](https://user-images.githubusercontent.com/22152065/60768601-01cced00-a0db-11e9-9a40-9affe9a160d5.png)
 
@@ -40,4 +48,4 @@ The Persian calendar is a sonar calendar, like Gregorian calendar, but there are
 
 ## Thanks to
 
-- Arash Sahebolamri, for making this library at first place.
+- Mohsens22 and Arash Sahebolamri, for making this library at first place.

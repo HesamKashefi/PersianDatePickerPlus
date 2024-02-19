@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SampleProject"
-        xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls"
+        xmlns:persianDateControls="clr-namespace:PersianDateControls;assembly=PersianDateControls"
         mc:Ignorable="d"
         xmlns:system="clr-namespace:System"
         Loaded="Window_Loaded"
