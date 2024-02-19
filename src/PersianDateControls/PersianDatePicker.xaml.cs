@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Mohsen.PersianDateControls
 {
@@ -25,7 +18,7 @@ namespace Mohsen.PersianDateControls
             this.Text = this.SelectedDate.ToString();
 
             //this is for closing the popup when a date is selected using PersianCalendar
-            foreach (var monthModeButton in this.persianCalendar.monthModeButtons)
+            foreach (var monthModeButton in this.persianCalendar.MonthModeButtons)
             {
                 monthModeButton.Click += delegate
                 {
@@ -36,9 +29,19 @@ namespace Mohsen.PersianDateControls
         }
 
         [Category("Date Picker")]
-        public Mohsen.PersianDate SelectedDate
+        public string PlaceHolder
         {
-            get { return (Mohsen.PersianDate)GetValue(SelectedDateProperty); }
+            get { return (string)GetValue(PlaceHolderProperty); }
+            set { SetValue(PlaceHolderProperty, value); }
+        }
+        public static readonly DependencyProperty PlaceHolderProperty =
+            DependencyProperty.Register("PlaceHolder", typeof(string), typeof(PersianDatePicker), new PropertyMetadata("انتخاب تاریخ"));
+
+
+        [Category("Date Picker")]
+        public Mohsen.PersianDate? SelectedDate
+        {
+            get { return (Mohsen.PersianDate?)GetValue(SelectedDateProperty); }
             set { SetValue(SelectedDateProperty, value); }
         }
         public static readonly DependencyProperty SelectedDateProperty;
@@ -108,6 +111,7 @@ namespace Mohsen.PersianDateControls
         static object coerceDateToBeInRange(DependencyObject d, object o)
         {
             PersianDatePicker pdp = d as PersianDatePicker;
+            if (o is null) return null;
             Mohsen.PersianDate value = (Mohsen.PersianDate)o;
             if (value < pdp.DisplayDateStart)
             {
@@ -123,8 +127,11 @@ namespace Mohsen.PersianDateControls
         static void selectedDateChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             PersianDatePicker pdp = o as PersianDatePicker;
-            pdp.Text = e.NewValue.ToString();
-            pdp.RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent, pdp));
+            if (pdp is not null)
+            {
+                pdp.Text = e.NewValue?.ToString() ?? string.Empty;
+                pdp.RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent, pdp));
+            }
         }
 
         static PersianDatePicker()
@@ -132,7 +139,7 @@ namespace Mohsen.PersianDateControls
             PropertyMetadata selectedDateMetadata = new PropertyMetadata(Mohsen.PersianDate.Today, selectedDateChanged);
             selectedDateMetadata.CoerceValueCallback = coerceDateToBeInRange;
             SelectedDateProperty =
-                DependencyProperty.Register("SelectedDate", typeof(Mohsen.PersianDate), typeof(PersianDatePicker), selectedDateMetadata);
+                DependencyProperty.Register("SelectedDate", typeof(Mohsen.PersianDate?), typeof(PersianDatePicker), selectedDateMetadata);
 
             PropertyMetadata displayDateMetadata = new PropertyMetadata(Mohsen.PersianDate.Today);
             displayDateMetadata.CoerceValueCallback = coerceDateToBeInRange;

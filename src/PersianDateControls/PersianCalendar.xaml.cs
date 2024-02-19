@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Mohsen;
 
 namespace Mohsen.PersianDateControls
 {
@@ -28,6 +19,7 @@ namespace Mohsen.PersianDateControls
 
             this.setCalendar();
         }
+
         //Properties
 
         public static readonly DependencyProperty DisplayDateProperty;
@@ -80,9 +72,9 @@ namespace Mohsen.PersianDateControls
 
         public static readonly DependencyProperty DisplayDateEndProperty;
         [System.ComponentModel.Category("Calendar")]
-        public Mohsen.PersianDate SelectedDate
+        public Mohsen.PersianDate? SelectedDate
         {
-            get { return (Mohsen.PersianDate)GetValue(SelectedDateProperty); }
+            get { return (Mohsen.PersianDate?)GetValue(SelectedDateProperty); }
             set { SetValue(SelectedDateProperty, value); }
         }
         public static readonly DependencyProperty SelectedDateProperty;
@@ -145,6 +137,7 @@ namespace Mohsen.PersianDateControls
         static object coerceDateToBeInRange(DependencyObject d, object o)
         {
             PersianCalendar pc = d as PersianCalendar;
+            if (o is null) return null;
             Mohsen.PersianDate value = (Mohsen.PersianDate)o;
             if (value < pc.DisplayDateStart)
             {
@@ -170,8 +163,8 @@ namespace Mohsen.PersianDateControls
 
         static void modeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PersianCalendar pc = d as PersianCalendar;
-            pc.setCalendar();
+            if (d is PersianCalendar pc)
+                pc.setCalendar();
         }
 
         static PersianCalendar()
@@ -191,13 +184,16 @@ namespace Mohsen.PersianDateControls
             (DependencyObject d, DependencyPropertyChangedEventArgs e) =>
             {
                 PersianCalendar pc = d as PersianCalendar;
-                pc.selectedDateCheck((Mohsen.PersianDate)e.OldValue);
-                pc.RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent, pc));
+                if (pc != null)
+                {
+                    pc.selectedDateCheck((Mohsen.PersianDate?)e.OldValue);
+                    pc.RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent, pc));
+                }
             }
             );
             selectedDateMetaData.CoerceValueCallback = coerceDateToBeInRange;
             SelectedDateProperty =
-                DependencyProperty.Register("SelectedDate", typeof(Mohsen.PersianDate), typeof(PersianCalendar), selectedDateMetaData);
+                DependencyProperty.Register("SelectedDate", typeof(Mohsen.PersianDate?), typeof(PersianCalendar), selectedDateMetaData);
 
             PropertyMetadata displayDateStartMetaData = new PropertyMetadata
             {
@@ -224,7 +220,10 @@ namespace Mohsen.PersianDateControls
             (DependencyObject d, DependencyPropertyChangedEventArgs e) =>
             {
                 PersianCalendar pc = d as PersianCalendar;
-                pc.todayCheck();
+                if (pc != null)
+                {
+                    pc.todayCheck();
+                }
             }
             );
             TodayBackgroundProperty =
@@ -234,7 +233,7 @@ namespace Mohsen.PersianDateControls
                 RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PersianCalendar));
 
         }
-        Button newControl()
+        private Button newControl()
         {
             var element = new Button
             {
@@ -244,14 +243,17 @@ namespace Mohsen.PersianDateControls
                 VerticalContentAlignment = VerticalAlignment.Center,
                 FlowDirection = FlowDirection.RightToLeft,
                 Padding = new Thickness(0),
+                FontSize = 10,
                 Style = (Style)this.FindResource("InsideButtonsStyle"),
                 Background = Brushes.Transparent,
                 //ContentTemplate=(DataTemplate)this.FindResource("InsideButtonContentTemplate"),
             };
             return element;
         }
-        internal Button[,] monthModeButtons = new Button[6, 7];
-        static string[] daysOfWeek = new string[] { "ش", "١ش", "٢ش", "٣ش", "٤ش", "٥ش", "ج" };
+
+        #region Month
+        public readonly Button[,] MonthModeButtons = new Button[6, 7];
+        private readonly static string[] _daysOfWeek = new string[] { "ش", "١ش", "٢ش", "٣ش", "٤ش", "٥ش", "ج" };
         void InitializeMonth()
         {
             for (int j = 1; j <= 7; j++)
@@ -265,7 +267,7 @@ namespace Mohsen.PersianDateControls
                     Padding = new Thickness(0),
                     FontWeight = FontWeights.SemiBold,
                     Style = (Style)this.FindResource("InsideLabelStyle"),
-                    Content = daysOfWeek[j - 1],
+                    Content = _daysOfWeek[j - 1],
                 };
 
                 this.monthUniformGrid.Children.Add(element);
@@ -281,12 +283,11 @@ namespace Mohsen.PersianDateControls
                     //element.FontSize = 11d;
                     element.Click += new RoutedEventHandler(monthModeButton_Click);
                     this.monthUniformGrid.Children.Add(element);
-                    this.monthModeButtons[i - 2, j - 1] = element;
+                    this.MonthModeButtons[i - 2, j - 1] = element;
                 }
             }
 
         }
-
         void monthModeButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -297,9 +298,11 @@ namespace Mohsen.PersianDateControls
                 this.SetCurrentValue(DisplayDateProperty, new Mohsen.PersianDate(buttonDate.Year, buttonDate.Month, 1));
             this.SelectedDate = buttonDate;
         }
+        #endregion
 
 
-        Button[,] yearModeButtons = new Button[4, 3];
+        #region Year
+        private readonly Button[,] _yearModeButtons = new Button[4, 3];
         void initializeYear()
         {
             int tabIndex = 10;
@@ -313,7 +316,7 @@ namespace Mohsen.PersianDateControls
                     element.TabIndex = tabIndex++;
                     element.Click += new RoutedEventHandler(yearModeButton_Click);
                     element.Tag = j + i * 3 + 1;
-                    this.yearModeButtons[i, j] = element;
+                    this._yearModeButtons[i, j] = element;
                     this.yearUniformGrid.Children.Add(element);
 
                 }
@@ -326,9 +329,11 @@ namespace Mohsen.PersianDateControls
             this.SetCurrentValue(DisplayDateProperty, new Mohsen.PersianDate(this.DisplayDate.Year, month, 1));
             this.DisplayMode = CalendarMode.Month;
         }
+        #endregion
 
 
-        Button[] DecadeModeButtons = new Button[12];
+        #region Decade
+        private readonly Button[] _decadeModeButtons = new Button[12];
         void initializeDecade()
         {
             int tabIndex = 10;
@@ -341,29 +346,33 @@ namespace Mohsen.PersianDateControls
                 //element.FontSize = 11d;
                 element.Click += new RoutedEventHandler(decadeModeButton_Click);
                 element.Tag = j - 1;
-                this.DecadeModeButtons[j] = element;
+                this._decadeModeButtons[j] = element;
                 this.decadeUniformGrid.Children.Add(element);
 
             }
         }
-
         void decadeModeButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             this.SetCurrentValue(DisplayDateProperty, new Mohsen.PersianDate((int)button.Tag, 1, 1));
             this.DisplayMode = CalendarMode.Year;
         }
+        #endregion
 
         private void selectedDateCheck(Mohsen.PersianDate? oldValue)
         {
             int r, c;
-            monthModeDateToRowColumn(this.SelectedDate, out r, out c);
-            setMonthModeButtonAppearance(this.monthModeButtons[r, c]);
+
+            if (this.SelectedDate is not null)
+            {
+                monthModeDateToRowColumn(this.SelectedDate.Value, out r, out c);
+                setMonthModeButtonAppearance(this.MonthModeButtons[r, c]);
+            }
 
             if (oldValue != null)
             {
                 monthModeDateToRowColumn(oldValue.Value, out r, out c);
-                setMonthModeButtonAppearance(this.monthModeButtons[r, c]);
+                setMonthModeButtonAppearance(this.MonthModeButtons[r, c]);
             }
         }
         void setMonthModeButtonAppearance(Button button)
@@ -389,7 +398,7 @@ namespace Mohsen.PersianDateControls
             {
                 int r, c;
                 monthModeDateToRowColumn(Mohsen.PersianDate.Today, out r, out c);
-                setMonthModeButtonAppearance(this.monthModeButtons[r, c]);
+                setMonthModeButtonAppearance(this.MonthModeButtons[r, c]);
             }
         }
         /// <param name="row">zero-based row number</param>
@@ -447,16 +456,16 @@ namespace Mohsen.PersianDateControls
                 int y = i + decade;
                 if (y >= DisplayDateStart.Year && y <= DisplayDateEnd.Year)
                 {
-                    DecadeModeButtons[i + 1].Content = decade + i;
-                    DecadeModeButtons[i + 1].Tag = decade + i;
-                    DecadeModeButtons[i + 1].IsEnabled = true;
+                    _decadeModeButtons[i + 1].Content = decade + i;
+                    _decadeModeButtons[i + 1].Tag = decade + i;
+                    _decadeModeButtons[i + 1].IsEnabled = true;
 
                 }
                 else
                 {
-                    DecadeModeButtons[i + 1].Content = "";
-                    DecadeModeButtons[i + 1].Tag = null;
-                    DecadeModeButtons[i + 1].IsEnabled = false;
+                    _decadeModeButtons[i + 1].Content = "";
+                    _decadeModeButtons[i + 1].Tag = null;
+                    _decadeModeButtons[i + 1].IsEnabled = false;
                 }
             }
             this.titleButton.Content = decade.ToString();
@@ -473,7 +482,7 @@ namespace Mohsen.PersianDateControls
             {
                 for (int j = 1; j <= 7; j++)
                 {
-                    var button = monthModeButtons[i - 1, j - 1];
+                    var button = MonthModeButtons[i - 1, j - 1];
                     Mohsen.PersianDate date = new Mohsen.PersianDate();
                     bool dateInRange;
                     try
@@ -515,8 +524,6 @@ namespace Mohsen.PersianDateControls
             this.todayCheck();
             this.selectedDateCheck(null);
         }
-
-
         private void setYearMode()
         {
             this.monthUniformGrid.Visibility = this.decadeUniformGrid.Visibility = Visibility.Collapsed;
@@ -532,13 +539,13 @@ namespace Mohsen.PersianDateControls
                     if (new Mohsen.PersianDate(DisplayDate.Year, month, Mohsen.PersianDate.DaysInMonth(DisplayDate.Year, month)) >= DisplayDateStart &&
                         new Mohsen.PersianDate(DisplayDate.Year, month, 1) <= DisplayDateEnd)
                     {
-                        yearModeButtons[i, j].Content = ((PersianMonth)month).ToString();
-                        yearModeButtons[i, j].IsEnabled = true;
+                        _yearModeButtons[i, j].Content = ((PersianMonth)month).ToString();
+                        _yearModeButtons[i, j].IsEnabled = true;
                     }
                     else
                     {
-                        yearModeButtons[i, j].Content = "";
-                        yearModeButtons[i, j].IsEnabled = false;
+                        _yearModeButtons[i, j].Content = "";
+                        _yearModeButtons[i, j].IsEnabled = false;
                     }
                 }
             }
@@ -614,6 +621,22 @@ namespace Mohsen.PersianDateControls
                 this.DisplayMode = CalendarMode.Year;
             else if (this.DisplayMode == CalendarMode.Year)
                 this.DisplayMode = CalendarMode.Decade;
+        }
+
+        private void GoToToday_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var newDisplayDate = new PersianDate(DateTime.Now);
+
+            if (newDisplayDate >= DisplayDateStart && newDisplayDate <= DisplayDateEnd)
+            {
+                this.SetCurrentValue(DisplayDateProperty, newDisplayDate);
+                this.SelectedDate = newDisplayDate;
+            }
+        }
+
+        private void ClearDate_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.SelectedDate = null;
         }
     }
 }
