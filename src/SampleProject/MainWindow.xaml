@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SampleProject"
-        xmlns:persianDateControls="clr-namespace:PersianDateControls;assembly=PersianDateControls"
+        xmlns:PersianDateControlsPlus="clr-namespace:PersianDateControlsPlus;assembly=PersianDateControlsPlus"
         mc:Ignorable="d"
         xmlns:system="clr-namespace:System"
         Loaded="Window_Loaded"
@@ -34,7 +34,7 @@
                   HorizontalAlignment="Center"
                   VerticalAlignment="Top"
                   FontSize="12" />
-        <persianDateControls:PersianCalendar  Name="persianCalendar"
+        <PersianDateControlsPlus:PersianCalendar  Name="persianCalendar"
                                               DisplayDate="{Binding SelectedDate, RelativeSource={RelativeSource Self}}"
                                               SelectedDate="{Binding SelectedDate, ElementName=calendar, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
                                               Background="{x:Static SystemColors.ControlLightLightBrush}"
@@ -55,7 +55,7 @@
                      HorizontalAlignment="Center"
                      Height="25"
                      Width="115" />
-        <persianDateControls:PersianDatePicker Name="persianDatePicker"
+        <PersianDateControlsPlus:PersianDatePicker Name="persianDatePicker"
                                                SelectedDate="{Binding SelectedDate, ElementName=datePicker, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
                                                Background="{x:Static SystemColors.ControlLightLightBrush}"
                                                TabIndex="3"

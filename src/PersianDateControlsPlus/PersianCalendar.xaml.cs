@@ -1,11 +1,9 @@
-﻿using PersianDateControls;
-using PersianDateControls.PersianDate;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace PersianDateControls
+namespace PersianDateControlsPlus
 {
     [System.ComponentModel.DefaultEvent("SelectedDateChanged")]
     [System.ComponentModel.DefaultProperty("DisplayDate")]
@@ -313,7 +311,7 @@ namespace PersianDateControls
                 for (int j = 0; j < 3; j++)
                 {
                     var element = newControl();
-                    element.Content = ((PersianMonth)j + i * 3 + 1).ToString();
+                    element.Content = ((PersianDate.PersianMonth)j + i * 3 + 1).ToString();
                     //element.FontSize = 11d;
                     element.TabIndex = tabIndex++;
                     element.Click += new RoutedEventHandler(yearModeButton_Click);
@@ -522,7 +520,7 @@ namespace PersianDateControls
 
             }
 
-            this.titleButton.Content = ((PersianMonth)month).ToString() + " " + year.ToString();
+            this.titleButton.Content = ((PersianDate.PersianMonth)month).ToString() + " " + year.ToString();
             this.todayCheck();
             this.selectedDateCheck(null);
         }
@@ -541,7 +539,7 @@ namespace PersianDateControls
                     if (new PersianDate.PersianDate(DisplayDate.Year, month, PersianDate.PersianDate.DaysInMonth(DisplayDate.Year, month)) >= DisplayDateStart &&
                         new PersianDate.PersianDate(DisplayDate.Year, month, 1) <= DisplayDateEnd)
                     {
-                        _yearModeButtons[i, j].Content = ((PersianMonth)month).ToString();
+                        _yearModeButtons[i, j].Content = ((PersianDate.PersianMonth)month).ToString();
                         _yearModeButtons[i, j].IsEnabled = true;
                     }
                     else

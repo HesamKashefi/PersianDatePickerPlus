@@ -6,7 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace PersianDateControls
+namespace PersianDateControlsPlus
 {
     /// <summary>
     /// A Fully Customizable Persian DatePicker

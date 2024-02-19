@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PersianDateControls\PersianDateControls.csproj" />
+    <ProjectReference Include="..\PersianDateControlsPlus\PersianDateControlsPlus.csproj" />
   </ItemGroup>
 
   <Target Name="WorkaroundNetStandard" AfterTargets="ResolvePackageAssets">

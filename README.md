@@ -9,8 +9,8 @@
 ## NuGet
 
 <p>
-  <a href="http://nuget.org/List/Packages/PersianDateControls">
-  <img alt="ManyConsole" src="https://img.shields.io/nuget/v/PersianDateControls.svg">
+  <a href="http://nuget.org/List/Packages/PersianDateControlsPlus">
+  <img alt="ManyConsole" src="https://img.shields.io/nuget/v/PersianDateControlsPlus.svg">
   </a>
 
 ## How to use
@@ -18,19 +18,19 @@
 First, install this package:
 
 ```ps
-Install-Package PersianDateControls
+Install-Package PersianDateControlsPlus
 ```
 
 Then add this code at the top of your Xaml:
 
 ```xaml
-xmlns:PersianDateControls="clr-namespace:PersianDateControls;assembly=PersianDateControls"
+xmlns:PersianDateControlsPlus="clr-namespace:PersianDateControls;assembly=PersianDateControls"
 ```
 
 then paste
 
 ```xaml
-<PersianDateControls:PersianDatePicker />
+<PersianDateControlsPlus:PersianDatePicker />
 ```
 
 Whereever you wanted to use persian calender.

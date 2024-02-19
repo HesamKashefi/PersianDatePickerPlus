@@ -1,4 +1,4 @@
-﻿namespace PersianDateControls.PersianDate
+﻿namespace PersianDateControlsPlus.PersianDate
 {
     public enum PersianDayOfWeek
     {

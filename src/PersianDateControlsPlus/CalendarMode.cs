@@ -1,4 +1,4 @@
-﻿namespace PersianDateControls
+﻿namespace PersianDateControlsPlus
 {
     public enum CalendarMode
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace PersianDateControls.PersianDate
+namespace PersianDateControlsPlus.PersianDate
 {
     public class PersianDateConverter : TypeConverter
     {

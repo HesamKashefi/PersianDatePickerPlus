@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Data;
-using PersianDateControls.PersianDate;
+using PersianDateControlsPlus.PersianDate;
 
 namespace SampleProject
 {
