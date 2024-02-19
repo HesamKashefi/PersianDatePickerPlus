@@ -2,31 +2,65 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Mohsen.PersianDateControls
 {
+    /// <summary>
+    /// A Fully Customizable Persian DatePicker
+    /// </summary>
     [DefaultEvent("SelectedDateChanged")]
     [DefaultProperty("SelectedDate")]
-    public partial class PersianDatePicker : UserControl
+    [TemplatePart(Name = OpenCalendarButtonElementPartName, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = DatePickerPopupElementPartName, Type = typeof(Popup))]
+    [TemplatePart(Name = PersianCalendarElementPartName, Type = typeof(PersianCalendar))]
+    [TemplatePart(Name = DateTextBoxElementPartName, Type = typeof(TextBox))]
+    public class PersianDatePicker : Control
     {
-        public PersianDatePicker()
+        #region PART Names
+        public const string OpenCalendarButtonElementPartName = "PART_OpenCalendarButtonElement";
+        public const string DatePickerPopupElementPartName = "PART_DatePickerPopupElement";
+        public const string PersianCalendarElementPartName = "PART_PersianCalendarElement";
+        public const string DateTextBoxElementPartName = "PART_DateTextBoxElement";
+        #endregion
+
+        #region PARTS
+        protected ButtonBase _openCalendarButtonElement;
+        protected Popup _datePickerPopupElement;
+        protected PersianCalendar _persianCalendarElement;
+        protected TextBox _dateTextBoxElement;
+        #endregion
+
+        #region Method Overrides
+        public override void OnApplyTemplate()
         {
-            InitializeComponent();
-            setBindings();
-            this.Text = this.SelectedDate.ToString();
+            base.OnApplyTemplate();
 
-            //this is for closing the popup when a date is selected using PersianCalendar
-            foreach (var monthModeButton in this.persianCalendar.MonthModeButtons)
-            {
-                monthModeButton.Click += delegate
-                {
-                    this.persianCalnedarPopup.IsOpen = false;
-                };
-            }
+            _openCalendarButtonElement = GetTemplateChild(OpenCalendarButtonElementPartName) as ButtonBase ??
+                throw new ArgumentNullException($"PersianDatePicker Missing PART: '{OpenCalendarButtonElementPartName}'");
 
+            _datePickerPopupElement = GetTemplateChild(DatePickerPopupElementPartName) as Popup ??
+                throw new ArgumentNullException($"PersianDatePicker Missing PART: '{DatePickerPopupElementPartName}'");
+
+            _persianCalendarElement = GetTemplateChild(PersianCalendarElementPartName) as PersianCalendar ??
+                throw new ArgumentNullException($"PersianDatePicker Missing PART: '{PersianCalendarElementPartName}'");
+
+            _dateTextBoxElement = GetTemplateChild(DateTextBoxElementPartName) as TextBox ??
+                throw new ArgumentNullException($"PersianDatePicker Missing PART: '{DateTextBoxElementPartName}'");
+
+            SetBindings();
+
+            _openCalendarButtonElement.Click += OpenCalendarButtonElement_Click;
+            _datePickerPopupElement.Opened += DatePickerPopupElement_Opened;
+            _persianCalendarElement.SelectedDateChanged += PersianCalendarElement_SelectedDateChanged;
+            _dateTextBoxElement.LostFocus += DateTextBoxElement_LostFocus;
+            _dateTextBoxElement.KeyUp += DateTextBoxElement_KeyUp;
         }
+        #endregion
+
+        #region Dependency Properties
 
         [Category("Date Picker")]
         public string PlaceHolder
@@ -101,6 +135,7 @@ namespace Mohsen.PersianDateControls
         static object coerceDisplayDateEnd(DependencyObject d, object o)
         {
             var pdp = d as PersianDatePicker;
+            if (pdp is null) return null;
             Mohsen.PersianDate value = (Mohsen.PersianDate)o;
             if (value < pdp.DisplayDateStart)
             {
@@ -134,6 +169,15 @@ namespace Mohsen.PersianDateControls
             }
         }
 
+        #endregion
+
+        #region Ctor
+
+        public PersianDatePicker()
+        {
+            this.Text = this.SelectedDate.ToString();
+        }
+
         static PersianDatePicker()
         {
             PropertyMetadata selectedDateMetadata = new PropertyMetadata(Mohsen.PersianDate.Today, selectedDateChanged);
@@ -161,17 +205,47 @@ namespace Mohsen.PersianDateControls
             SelectedDateChangedEvent =
                 EventManager.RegisterRoutedEvent("SelectedDateChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PersianDatePicker));
         }
+        #endregion
 
+        #region Properties
         /// <summary>
         /// This readonly property gets the PersianCalendar object displayed when clicking the Calendar button.
         /// </summary>
         public PersianCalendar PersianCalendar
         {
-            get { return persianCalendar; }
+            get { return _persianCalendarElement; }
+        }
+        #endregion
+
+        #region Event Handlers
+        private void OpenCalendarButtonElement_Click(object sender, RoutedEventArgs e)
+        {
+            this._datePickerPopupElement.IsOpen = true;
         }
 
+        private void PersianCalendarElement_SelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            this._datePickerPopupElement.IsOpen = false;
+        }
 
-        private void setBindings()
+        private void DateTextBoxElement_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ValidateText();
+        }
+        private void DateTextBoxElement_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+                ValidateText();
+        }
+
+        private void DatePickerPopupElement_Opened(object sender, EventArgs e)
+        {
+            this._persianCalendarElement.Focus();
+        }
+        #endregion
+
+        #region Private Methods
+        private void SetBindings()
         {
             Binding selectedDateBinding = new Binding
             {
@@ -179,7 +253,7 @@ namespace Mohsen.PersianDateControls
                 Path = new PropertyPath("SelectedDate"),
                 Mode = BindingMode.TwoWay,
             };
-            this.persianCalendar.SetBinding(PersianCalendar.SelectedDateProperty, selectedDateBinding);
+            this._persianCalendarElement.SetBinding(PersianCalendar.SelectedDateProperty, selectedDateBinding);
 
             Binding displayDateBinding = new Binding
             {
@@ -187,7 +261,7 @@ namespace Mohsen.PersianDateControls
                 Path = new PropertyPath("DisplayDate"),
                 Mode = BindingMode.TwoWay,
             };
-            this.persianCalendar.SetBinding(PersianCalendar.DisplayDateProperty, displayDateBinding);
+            this._persianCalendarElement.SetBinding(PersianCalendar.DisplayDateProperty, displayDateBinding);
 
             Binding textBinding = new Binding
             {
@@ -195,11 +269,11 @@ namespace Mohsen.PersianDateControls
                 Path = new PropertyPath("Text"),
                 Mode = BindingMode.TwoWay,
             };
-            this.dateTextBox.SetBinding(TextBox.TextProperty, textBinding);
+            this._dateTextBoxElement.SetBinding(TextBox.TextProperty, textBinding);
 
             Binding displayDateStartBinding = new Binding
             {
-                Source = this.persianCalendar,
+                Source = this._persianCalendarElement,
                 Path = new PropertyPath("DisplayDateStart"),
                 Mode = BindingMode.TwoWay,
             };
@@ -207,43 +281,22 @@ namespace Mohsen.PersianDateControls
 
             Binding displayDateEndBinding = new Binding
             {
-                Source = this.persianCalendar,
+                Source = this._persianCalendarElement,
                 Path = new PropertyPath("DisplayDateEnd"),
                 Mode = BindingMode.TwoWay,
             };
             this.SetBinding(DisplayDateEndProperty, displayDateEndBinding);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ValidateText()
         {
-            persianCalnedarPopup.IsOpen = true;
-        }
-
-        void validateText()
-        {
-            Mohsen.PersianDate date;
-            if (Mohsen.PersianDate.TryParse(dateTextBox.Text, out date))
+            if (Mohsen.PersianDate.TryParse(this._dateTextBoxElement.Text, out Mohsen.PersianDate date))
             {
                 this.SelectedDate = date;
                 this.DisplayDate = date;
             }
-            this.Text = this.SelectedDate.ToString();
+            this.Text = this.SelectedDate?.ToString() ?? string.Empty;
         }
-
-        private void dateTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            validateText();
-        }
-
-        private void dateTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-                validateText();
-        }
-
-        private void persianCalnedarPopup_Opened(object sender, EventArgs e)
-        {
-            this.persianCalendar.Focus();
-        }
+        #endregion
     }
 }

@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Brush x:Key="PersianDateControls.NormalBrush">Transparent</Brush>
+    <Brush x:Key="PersianDateControls.NormalBorderBrush">Black</Brush>
+    <Brush x:Key="PersianDateControls.DefaultedBorderBrush">DarkBlue</Brush>
+    <Brush x:Key="PersianDateControls.HoverBrush">Transparent</Brush>
+    <Brush x:Key="PersianDateControls.HoverBackgroundBrush">Transparent</Brush>
+    <Brush x:Key="PersianDateControls.HoverForegroundBrush">RoyalBlue</Brush>
+    <Brush x:Key="PersianDateControls.ForegroundBrush">Black</Brush>
+    <Brush x:Key="PersianDateControls.PressedBrush">Transparent</Brush>
+    <Brush x:Key="PersianDateControls.PressedBorderBrush">Lavender</Brush>
+    <Brush x:Key="PersianDateControls.TextBoxHoverBorderBrush">LightBlue</Brush>
+</ResourceDictionary>
