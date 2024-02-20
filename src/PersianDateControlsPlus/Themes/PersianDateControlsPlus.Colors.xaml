@@ -4,10 +4,11 @@
     <Brush x:Key="PersianDateControlsPlus.NormalBorderBrush">Black</Brush>
     <Brush x:Key="PersianDateControlsPlus.DefaultedBorderBrush">DarkBlue</Brush>
     <Brush x:Key="PersianDateControlsPlus.HoverBrush">Transparent</Brush>
-    <Brush x:Key="PersianDateControlsPlus.HoverBackgroundBrush">Transparent</Brush>
+    <Brush x:Key="PersianDateControlsPlus.HoverBackgroundBrush">LightBlue</Brush>
     <Brush x:Key="PersianDateControlsPlus.HoverForegroundBrush">RoyalBlue</Brush>
     <Brush x:Key="PersianDateControlsPlus.ForegroundBrush">Black</Brush>
     <Brush x:Key="PersianDateControlsPlus.PressedBrush">Transparent</Brush>
     <Brush x:Key="PersianDateControlsPlus.PressedBorderBrush">Lavender</Brush>
     <Brush x:Key="PersianDateControlsPlus.TextBoxHoverBorderBrush">LightBlue</Brush>
+    <Brush x:Key="PersianDateControlsPlus.SelectedBackgroundBrush">LightGray</Brush>
 </ResourceDictionary>

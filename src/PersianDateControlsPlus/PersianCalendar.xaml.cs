@@ -244,7 +244,7 @@ namespace PersianDateControlsPlus
                 FlowDirection = FlowDirection.RightToLeft,
                 Padding = new Thickness(0),
                 FontSize = 10,
-                Style = (Style)this.FindResource("InsideButtonsStyle"),
+                Style = (Style)this.FindResource("PersianDateControlsPlus.CalendarDayMonthYearStyle"),
                 Background = Brushes.Transparent,
                 //ContentTemplate=(DataTemplate)this.FindResource("InsideButtonContentTemplate"),
             };
@@ -256,6 +256,7 @@ namespace PersianDateControlsPlus
         private readonly static string[] _daysOfWeek = new string[] { "ش", "١ش", "٢ش", "٣ش", "٤ش", "٥ش", "ج" };
         void InitializeMonth()
         {
+            var style = (Style)this.FindResource("PersianDateControlsPlus.WeekDayNameLableStyle");
             for (int j = 1; j <= 7; j++)
             {
                 var element = new Label
@@ -266,7 +267,7 @@ namespace PersianDateControlsPlus
                     VerticalContentAlignment = VerticalAlignment.Top,
                     Padding = new Thickness(0),
                     FontWeight = FontWeights.SemiBold,
-                    Style = (Style)this.FindResource("InsideLabelStyle"),
+                    Style = style,
                     Content = _daysOfWeek[j - 1],
                 };
 
