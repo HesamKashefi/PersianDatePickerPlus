@@ -24,7 +24,7 @@ Install-Package PersianDateControlsPlus
 Then add this code at the top of your Xaml:
 
 ```xaml
-xmlns:PersianDateControlsPlus="clr-namespace:PersianDateControls;assembly=PersianDateControls"
+xmlns:PersianDateControlsPlus="clr-namespace:PersianDateControlsPlus;assembly=PersianDateControlsPlus"
 ```
 
 then paste
