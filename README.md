@@ -21,6 +21,18 @@ First, install this package:
 Install-Package PersianDateControlsPlus
 ```
 
+Add this code at the top of your App.xaml:
+```xaml
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+```
+
+
 Then add this code at the top of your Xaml:
 
 ```xaml
