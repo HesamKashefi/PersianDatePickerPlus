@@ -7,8 +7,6 @@ on:
   workflow_dispatch:
   push:
     branches: [ "master" ]    
-  paths:
-    - src/PersianDateControlsPlus/**
 
 jobs:
   build:
