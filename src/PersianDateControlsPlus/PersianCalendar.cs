@@ -71,6 +71,8 @@ namespace PersianDateControlsPlus
             initializeDecade();
 
             SetCalendarMode();
+
+            TodayCheck();
         }
 
         private void CreateAndAddTheDateGrids()
@@ -158,25 +160,6 @@ namespace PersianDateControlsPlus
             set { SetValue(SelectedDateProperty, value); }
         }
         public static readonly DependencyProperty SelectedDateProperty;
-
-
-        [System.ComponentModel.Category("Calendar")]
-        public Brush SelectedDateBackground
-        {
-            get { return (Brush)GetValue(SelectedDateBackgroundProperty); }
-            set { SetValue(SelectedDateBackgroundProperty, value); }
-        }
-        public static readonly DependencyProperty SelectedDateBackgroundProperty =
-            DependencyProperty.Register("SelectedDateBackground", typeof(Brush), typeof(PersianCalendar), new UIPropertyMetadata(Brushes.Lavender));
-
-
-        [System.ComponentModel.Category("Calendar")]
-        public Brush TodayBackground
-        {
-            get { return (Brush)GetValue(TodayBackgroundProperty); }
-            set { SetValue(TodayBackgroundProperty, value); }
-        }
-        public static readonly DependencyProperty TodayBackgroundProperty;
 
         #endregion
 
@@ -295,20 +278,6 @@ namespace PersianDateControlsPlus
 
             DisplayDateEndProperty =
                 DependencyProperty.Register("DisplayDateEnd", typeof(PersianDate.PersianDate), typeof(PersianCalendar), displayDateEndMetaData);
-
-
-            PropertyMetadata todayBackgroundMetaData = new PropertyMetadata(Brushes.AliceBlue,
-            (DependencyObject d, DependencyPropertyChangedEventArgs e) =>
-            {
-                PersianCalendar pc = d as PersianCalendar;
-                if (pc != null)
-                {
-                    pc.todayCheck();
-                }
-            }
-            );
-            TodayBackgroundProperty =
-                DependencyProperty.Register("TodayBackground", typeof(Brush), typeof(PersianCalendar), todayBackgroundMetaData);
 
             SelectedDateChangedEvent = EventManager.RegisterRoutedEvent("SelectedDateChanged",
                 RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PersianCalendar));
@@ -460,22 +429,30 @@ namespace PersianDateControlsPlus
         void setMonthModeButtonAppearance(Button button)
         {
             if (button == null) return;
-            Brush bg = Brushes.Transparent;
+
             if (button.Tag != null)
             {
                 var bdate = (PersianDate.PersianDate)button.Tag;
                 if (bdate == PersianDate.PersianDate.Today)
                 {
-                    bg = this.TodayBackground;
+                    CalendarAssist.SetIsCurrentDay(button, true);
+                    CalendarAssist.SetIsSelectedDate(button, false);
+                }
+                else
+                {
+                    CalendarAssist.SetIsCurrentDay(button, false);
                 }
                 if (bdate == this.SelectedDate)
                 {
-                    bg = this.SelectedDateBackground;
+                    CalendarAssist.SetIsSelectedDate(button, true);
+                }
+                if (bdate != this.SelectedDate && bdate != PersianDate.PersianDate.Today)
+                {
+                    CalendarAssist.SetIsSelectedDate(button, false);
                 }
             }
-            button.Background = bg;
         }
-        private void todayCheck()
+        private void TodayCheck()
         {
             if (this.DisplayMode == CalendarMode.Month)
             {
@@ -607,7 +584,7 @@ namespace PersianDateControlsPlus
             }
 
             this.TitleButton.Content = ((PersianDate.PersianMonth)month).ToString() + " " + year.ToString();
-            this.todayCheck();
+            this.TodayCheck();
             this.selectedDateCheck(null);
         }
         private void setYearMode()
