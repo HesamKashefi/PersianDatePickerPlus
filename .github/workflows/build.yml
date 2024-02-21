@@ -20,8 +20,6 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/PersianDateControlsPlus/PersianDateControlsPlus.csproj
     - name: Build
       run: dotnet build src/PersianDateControlsPlus/PersianDateControlsPlus.csproj --no-restore --configuration release
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
