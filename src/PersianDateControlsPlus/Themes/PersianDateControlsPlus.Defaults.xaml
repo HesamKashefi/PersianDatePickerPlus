@@ -1,9 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:PersianDateControlsPlus="clr-namespace:PersianDateControlsPlus">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.CalendarStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.PersianCalendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.PersianDatePicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type PersianDateControlsPlus:PersianCalendar}">
+        <Setter Property="Template"
+                Value="{DynamicResource PersianDateControlsPlus.PersianCalendarTemplate}" />
+    </Style>
+
+    <Style TargetType="{x:Type PersianDateControlsPlus:PersianDatePicker}">
+        <Setter Property="Template"
+                Value="{DynamicResource PersianDateControlsPlus.PersianDatePickerTemplate}" />
+
+    </Style>
+    
 </ResourceDictionary>
