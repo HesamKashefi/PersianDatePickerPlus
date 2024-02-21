@@ -9,12 +9,12 @@
 		<AssemblyName>PersianDateControlsPlus</AssemblyName>
 		<RootNamespace>PersianDateControlsPlus</RootNamespace>
 		<Description>A Persian DatePicker Control For .NETCore WPF</Description>
-		<PackageProjectUrl>https://github.com/HesamKashefi/WPF_PersianDatePicker</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/HesamKashefi/WPF_PersianDatePicker</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/HesamKashefi/PersianDatePickerPlus</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/HesamKashefi/PersianDatePickerPlus</RepositoryUrl>
 		<RepositoryType>Public</RepositoryType>
 		<PackageTags>persiancalendar,persiandatepicker,persian,.net8,.net7,.net6,.net5,.netcore,wpf</PackageTags>
 		<Authors>HesamKasehfi,Mohsens22,Arash</Authors>
-		<Version>2.0.0-preview2</Version>
+		<Version>2.0.0-preview3</Version>
 		<Title>PersianDateControlsPlus</Title>
 		<CustomName>PersianDateControlsPlus</CustomName>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
