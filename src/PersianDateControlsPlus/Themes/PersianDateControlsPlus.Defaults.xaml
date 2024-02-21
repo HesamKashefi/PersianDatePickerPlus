@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.CalendarStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.PersianCalendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PersianDateControlsPlus;component/Themes/PersianDateControlsPlus.PersianDatePicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

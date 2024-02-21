@@ -1,26 +1,106 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace PersianDateControlsPlus
 {
     [System.ComponentModel.DefaultEvent("SelectedDateChanged")]
     [System.ComponentModel.DefaultProperty("DisplayDate")]
-    public partial class PersianCalendar : UserControl
+    [TemplatePart(Name = NextDecadeYearMonthButtonPartName, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = PreviousDecadeYearMonthButtonPartName, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = TitleButtonPartName, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = ClearDateButtonPartName, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = GoToTodayButtonPartName, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = GridsHostPartName, Type = typeof(ItemsControl))]
+    public class PersianCalendar : Control
     {
-        public PersianCalendar()
+        #region PART Names
+        public const string NextDecadeYearMonthButtonPartName = "PART_NextDecadeYearMonthButton";
+        public const string PreviousDecadeYearMonthButtonPartName = "PART_PreviousDecadeYearMonthButton";
+        public const string TitleButtonPartName = "PART_TitleButton";
+        public const string ClearDateButtonPartName = "PART_ClearDateButton";
+        public const string GoToTodayButtonPartName = "PART_GoToTodayButton";
+        public const string GridsHostPartName = "PART_GridsHost";
+        #endregion
+
+        #region PARTs
+        protected ButtonBase NextDecadeYearMonthButton;
+        protected ButtonBase PreviousDecadeYearMonthButton;
+        protected ButtonBase TitleButton;
+        protected ButtonBase ClearDateButton;
+        protected ButtonBase GoToTodayButton;
+        protected Panel GridsHost;
+        #endregion
+
+        #region Date Grid Controls
+        private UniformGrid _monthUniformGrid;
+        private UniformGrid _yearUniformGrid;
+        private UniformGrid _decadeUniformGrid;
+        #endregion
+
+        public override void OnApplyTemplate()
         {
-            InitializeComponent();
+            base.OnApplyTemplate();
+
+            NextDecadeYearMonthButton = GetTemplateChild(NextDecadeYearMonthButtonPartName) as ButtonBase ??
+                throw new ArgumentNullException($"PersianCalendar's PART : '{NextDecadeYearMonthButtonPartName}' is missing");
+            PreviousDecadeYearMonthButton = GetTemplateChild(PreviousDecadeYearMonthButtonPartName) as ButtonBase ??
+                throw new ArgumentNullException($"PersianCalendar's PART : '{PreviousDecadeYearMonthButtonPartName}' is missing");
+            TitleButton = GetTemplateChild(TitleButtonPartName) as ButtonBase ??
+                throw new ArgumentNullException($"PersianCalendar's PART : '{TitleButtonPartName}' is missing");
+            ClearDateButton = GetTemplateChild(ClearDateButtonPartName) as ButtonBase ??
+                throw new ArgumentNullException($"PersianCalendar's PART : '{ClearDateButtonPartName}' is missing");
+            GoToTodayButton = GetTemplateChild(GoToTodayButtonPartName) as ButtonBase ??
+                throw new ArgumentNullException($"PersianCalendar's PART : '{GoToTodayButtonPartName}' is missing");
+            GridsHost = GetTemplateChild(GridsHostPartName) as Panel ??
+                throw new ArgumentNullException($"PersianCalendar's PART : '{GridsHostPartName}' is missing");
+
+
+            PreviousDecadeYearMonthButton.Click += PreviousButton_Click;
+            NextDecadeYearMonthButton.Click += NextButton_Click;
+            TitleButton.Click += TitleButton_Click;
+            ClearDateButton.Click += ClearDate_Button_Click;
+            GoToTodayButton.Click += GoToToday_Button_Click;
+
+            CreateAndAddTheDateGrids();
 
             InitializeMonth();
             initializeYear();
             initializeDecade();
 
-            this.setCalendar();
+            SetCalendarMode();
         }
 
-        //Properties
+        private void CreateAndAddTheDateGrids()
+        {
+            _monthUniformGrid = new UniformGrid()
+            {
+                Rows = 7,
+                Columns = 7,
+                FlowDirection = FlowDirection.LeftToRight,
+            };
+            GridsHost.Children.Add(_monthUniformGrid);
+
+            _yearUniformGrid = new UniformGrid()
+            {
+                Rows = 3,
+                Columns = 4,
+                FlowDirection = FlowDirection.LeftToRight,
+            };
+            GridsHost.Children.Add(_yearUniformGrid);
+
+            _decadeUniformGrid = new UniformGrid()
+            {
+                Rows = 3,
+                Columns = 4,
+                FlowDirection = FlowDirection.LeftToRight,
+            };
+            GridsHost.Children.Add(_decadeUniformGrid);
+        }
+
+        #region Dependency Properties
 
         public static readonly DependencyProperty DisplayDateProperty;
         /// <summary>
@@ -98,6 +178,7 @@ namespace PersianDateControlsPlus
         }
         public static readonly DependencyProperty TodayBackgroundProperty;
 
+        #endregion
 
         //properties coercions and changed event handlers
         static void DisplayDateStartChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -164,7 +245,7 @@ namespace PersianDateControlsPlus
         static void modeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is PersianCalendar pc)
-                pc.setCalendar();
+                pc.SetCalendarMode();
         }
 
         static PersianCalendar()
@@ -233,7 +314,7 @@ namespace PersianDateControlsPlus
                 RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PersianCalendar));
 
         }
-        private Button newControl()
+        private Button NewControl()
         {
             var element = new Button
             {
@@ -271,19 +352,19 @@ namespace PersianDateControlsPlus
                     Content = _daysOfWeek[j - 1],
                 };
 
-                this.monthUniformGrid.Children.Add(element);
+                this._monthUniformGrid.Children.Add(element);
             }
             int tabIndex = 10;
             for (int i = 2; i <= 7; i++)
             {
                 for (int j = 1; j <= 7; j++)
                 {
-                    var element = newControl();
+                    var element = NewControl();
                     element.TabIndex = tabIndex++;
                     //element.Content = string.Format("{0},{1}", i, j);
                     //element.FontSize = 11d;
                     element.Click += new RoutedEventHandler(monthModeButton_Click);
-                    this.monthUniformGrid.Children.Add(element);
+                    this._monthUniformGrid.Children.Add(element);
                     this.MonthModeButtons[i - 2, j - 1] = element;
                 }
             }
@@ -311,14 +392,14 @@ namespace PersianDateControlsPlus
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    var element = newControl();
+                    var element = NewControl();
                     element.Content = ((PersianDate.PersianMonth)j + i * 3 + 1).ToString();
                     //element.FontSize = 11d;
                     element.TabIndex = tabIndex++;
                     element.Click += new RoutedEventHandler(yearModeButton_Click);
                     element.Tag = j + i * 3 + 1;
                     this._yearModeButtons[i, j] = element;
-                    this.yearUniformGrid.Children.Add(element);
+                    this._yearUniformGrid.Children.Add(element);
 
                 }
             }
@@ -339,16 +420,16 @@ namespace PersianDateControlsPlus
         {
             int tabIndex = 10;
 
-            this.decadeUniformGrid.Children.Add(new UIElement { IsEnabled = false });
+            this._decadeUniformGrid.Children.Add(new UIElement { IsEnabled = false });
             for (int j = 1; j <= 10; j++)
             {
-                var element = newControl();
+                var element = NewControl();
                 element.TabIndex = tabIndex++;
                 //element.FontSize = 11d;
                 element.Click += new RoutedEventHandler(decadeModeButton_Click);
                 element.Tag = j - 1;
                 this._decadeModeButtons[j] = element;
-                this.decadeUniformGrid.Children.Add(element);
+                this._decadeUniformGrid.Children.Add(element);
 
             }
         }
@@ -378,6 +459,7 @@ namespace PersianDateControlsPlus
         }
         void setMonthModeButtonAppearance(Button button)
         {
+            if (button == null) return;
             Brush bg = Brushes.Transparent;
             if (button.Tag != null)
             {
@@ -429,7 +511,7 @@ namespace PersianDateControlsPlus
             return firstDay.AddDays(dayDifference);
         }
 
-        private void setCalendar()
+        private void SetCalendarMode()
         {
             switch (this.DisplayMode)
             {
@@ -448,8 +530,9 @@ namespace PersianDateControlsPlus
         }
         private void setDecadeMode()
         {
-            this.monthUniformGrid.Visibility = this.yearUniformGrid.Visibility = Visibility.Collapsed;
-            this.decadeUniformGrid.Visibility = Visibility.Visible;
+            if (_monthUniformGrid is null || _yearUniformGrid is null || _decadeUniformGrid is null) return;
+            this._monthUniformGrid.Visibility = this._yearUniformGrid.Visibility = Visibility.Collapsed;
+            this._decadeUniformGrid.Visibility = Visibility.Visible;
 
             int decade = DisplayDate.Year - DisplayDate.Year % 10;
             for (int i = 0; i < 10; i++)
@@ -469,12 +552,14 @@ namespace PersianDateControlsPlus
                     _decadeModeButtons[i + 1].IsEnabled = false;
                 }
             }
-            this.titleButton.Content = decade.ToString();
+            this.TitleButton.Content = decade.ToString();
         }
         private void setMonthMode()
         {
-            this.decadeUniformGrid.Visibility = this.yearUniformGrid.Visibility = Visibility.Collapsed;
-            this.monthUniformGrid.Visibility = Visibility.Visible;
+            if (_monthUniformGrid is null || _yearUniformGrid is null || _decadeUniformGrid is null) return;
+
+            this._decadeUniformGrid.Visibility = this._yearUniformGrid.Visibility = Visibility.Collapsed;
+            this._monthUniformGrid.Visibility = Visibility.Visible;
 
             int year = DisplayDate.Year;
             int month = DisplayDate.Month;
@@ -521,16 +606,17 @@ namespace PersianDateControlsPlus
 
             }
 
-            this.titleButton.Content = ((PersianDate.PersianMonth)month).ToString() + " " + year.ToString();
+            this.TitleButton.Content = ((PersianDate.PersianMonth)month).ToString() + " " + year.ToString();
             this.todayCheck();
             this.selectedDateCheck(null);
         }
         private void setYearMode()
         {
-            this.monthUniformGrid.Visibility = this.decadeUniformGrid.Visibility = Visibility.Collapsed;
-            this.yearUniformGrid.Visibility = Visibility.Visible;
+            if (_monthUniformGrid is null || _yearUniformGrid is null || _decadeUniformGrid is null) return;
+            this._monthUniformGrid.Visibility = this._decadeUniformGrid.Visibility = Visibility.Collapsed;
+            this._yearUniformGrid.Visibility = Visibility.Visible;
 
-            this.titleButton.Content = this.DisplayDate.Year.ToString();
+            this.TitleButton.Content = this.DisplayDate.Year.ToString();
 
             for (int i = 0; i < 4; i++)
             {
@@ -552,7 +638,7 @@ namespace PersianDateControlsPlus
             }
         }
 
-        private void nextButton_Click(object sender, RoutedEventArgs e)
+        private void NextButton_Click(object sender, RoutedEventArgs e)
         {
             int m = this.DisplayDate.Month;
             int y = this.DisplayDate.Year;
@@ -584,7 +670,7 @@ namespace PersianDateControlsPlus
             }
         }
 
-        private void previousButton_Click(object sender, RoutedEventArgs e)
+        private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
             int m = this.DisplayDate.Month;
             int y = this.DisplayDate.Year;
@@ -616,7 +702,7 @@ namespace PersianDateControlsPlus
             }
         }
 
-        private void titleButton_Click(object sender, RoutedEventArgs e)
+        private void TitleButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.DisplayMode == CalendarMode.Month)
                 this.DisplayMode = CalendarMode.Year;
