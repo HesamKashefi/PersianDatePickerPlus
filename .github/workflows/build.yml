@@ -6,7 +6,9 @@ name: build
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ]    
+  paths:
+    - src/PersianDateControlsPlus/**
 
 jobs:
   build:
@@ -18,10 +20,10 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore --configuration release
+      run: dotnet build src/PersianDateControlsPlus/PersianDateControlsPlus.csproj --no-restore --configuration release
     - name: Test
       run: dotnet test --no-build --verbosity normal
