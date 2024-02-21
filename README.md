@@ -2,6 +2,10 @@
   <strong>A Persian date picker for .NET WPF (.NET Core)</strong>
 </p>
 
+## Documentations
+
+For documentaions go to [WIKI](https://github.com/HesamKashefi/PersianDatePickerPlus/wiki)
+
 ## Build Status
 
 [![build](https://github.com/HesamKashefi/PersianDatePickerPlus/actions/workflows/build.yml/badge.svg)](https://github.com/HesamKashefi/PersianDatePickerPlus/actions/workflows/build.yml)
@@ -58,6 +62,11 @@ The Persian calendar is a sonar calendar, like Gregorian calendar, but there are
 [Additional documentation](https://www.codeproject.com/Articles/43521/PersianDate-and-Some-WPF-Controls-For-It)
 [Persian documentation](https://www.dotnettips.info/newsarchive/details/10951)
 
+## Developed By
+
+[Hesam Kashefi](https://hesamkashefi.com)
+
+ 
 ## Thanks to
 
 - Mohsens22 and Arash Sahebolamri, for making this library at first place.

@@ -14,7 +14,7 @@
 		<RepositoryType>Public</RepositoryType>
 		<PackageTags>persiancalendar,persiandatepicker,persian,.net8,.net7,.net6,.net5,.netcore,wpf</PackageTags>
 		<Authors>HesamKasehfi,Mohsens22,Arash</Authors>
-		<Version>2.0.0-preview3</Version>
+		<Version>2.0.0-preview4</Version>
 		<Title>PersianDateControlsPlus</Title>
 		<CustomName>PersianDateControlsPlus</CustomName>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

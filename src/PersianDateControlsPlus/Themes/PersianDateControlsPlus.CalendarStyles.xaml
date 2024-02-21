@@ -31,8 +31,8 @@
                             CornerRadius="2"
                             Cursor="Hand"
                             BorderThickness="0"
-                            Background="{StaticResource PersianDateControlsPlus.NormalBrush}"
-                            BorderBrush="{StaticResource PersianDateControlsPlus.NormalBorderBrush}">
+                            Background="{DynamicResource PersianDateControlsPlus.NormalBrush}"
+                            BorderBrush="{DynamicResource PersianDateControlsPlus.NormalBorderBrush}">
                         <ContentPresenter Margin="2"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
@@ -43,27 +43,27 @@
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PersianDateControlsPlus.DefaultedBorderBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.DefaultedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsDefaulted"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PersianDateControlsPlus.DefaultedBorderBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.DefaultedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{StaticResource PersianDateControlsPlus.HoverBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.HoverBrush}" />
                             <Setter  Property="Foreground"
-                                     Value="{StaticResource PersianDateControlsPlus.HoverForegroundBrush}" />
+                                     Value="{DynamicResource PersianDateControlsPlus.HoverForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PersianDateControlsPlus.PressedBorderBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.PressedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
@@ -101,7 +101,7 @@
                             CornerRadius="2"
                             BorderThickness="0"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="{StaticResource PersianDateControlsPlus.NormalBorderBrush}">
+                            BorderBrush="{DynamicResource PersianDateControlsPlus.NormalBorderBrush}">
                         <ContentPresenter Margin="2"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
@@ -112,45 +112,45 @@
                                  Value="True">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{StaticResource PersianDateControlsPlus.SelectedDayBackgroundBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.SelectedDayBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="PersianDateControlsPlus:CalendarAssist.IsCurrentDay"
                                  Value="True">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{StaticResource PersianDateControlsPlus.CurrentDayBackgroundBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.CurrentDayBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PersianDateControlsPlus.DefaultedBorderBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.DefaultedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsDefaulted"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PersianDateControlsPlus.DefaultedBorderBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.DefaultedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{StaticResource PersianDateControlsPlus.HoverBackgroundBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.HoverBackgroundBrush}" />
                             <Setter  Property="Foreground"
-                                     Value="{StaticResource PersianDateControlsPlus.HoverForegroundBrush}" />
+                                     Value="{DynamicResource PersianDateControlsPlus.HoverForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="false">
                             <Setter  Property="Foreground"
-                                     Value="{StaticResource PersianDateControlsPlus.ForegroundBrush}" />
+                                     Value="{DynamicResource PersianDateControlsPlus.ForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <!--<Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />-->
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{StaticResource PersianDateControlsPlus.PressedBorderBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.PressedBorderBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -167,13 +167,13 @@
                                      Value="True">
                             <Setter TargetName="DateTextBlock"
                                     Property="Foreground"
-                                    Value="{StaticResource PersianDateControlsPlus.SelectedDayForegroundBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.SelectedDayForegroundBrush}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=(PersianDateControlsPlus:CalendarAssist.IsCurrentDay)}"
                                      Value="True">
                             <Setter TargetName="DateTextBlock"
                                     Property="Foreground"
-                                    Value="{StaticResource PersianDateControlsPlus.CurrentDayForegroundBrush}" />
+                                    Value="{DynamicResource PersianDateControlsPlus.CurrentDayForegroundBrush}" />
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>
