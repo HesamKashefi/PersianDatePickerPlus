@@ -8,7 +8,7 @@
 
     <ControlTemplate TargetType="{x:Type PersianDateControlsPlus:PersianCalendar}"
                      x:Key="PersianDateControlsPlus.PersianCalendarTemplate">
-        <Border BorderBrush="Gainsboro"
+        <Border BorderBrush="{DynamicResource PersianDateControlsPlus.ClandarBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="2"
                 ClipToBounds="True"
@@ -27,7 +27,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Border Background="#FFEAEEF9"
+                <Border Background="{DynamicResource PersianDateControlsPlus.ClandarHeaderBackgroundBrush}"
                         Margin="2">
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
