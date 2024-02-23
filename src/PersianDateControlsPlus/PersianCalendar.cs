@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace PersianDateControlsPlus
@@ -285,19 +286,8 @@ namespace PersianDateControlsPlus
         }
         private Button NewControl()
         {
-            var element = new Button
-            {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                FlowDirection = FlowDirection.RightToLeft,
-                Padding = new Thickness(0),
-                FontSize = 10,
-                Style = (Style)this.FindResource("PersianDateControlsPlus.CalendarDayMonthYearStyle"),
-                Background = Brushes.Transparent,
-                //ContentTemplate=(DataTemplate)this.FindResource("InsideButtonContentTemplate"),
-            };
+            var element = new Button();
+            element.SetResourceReference(StyleProperty, "PersianDateControlsPlus.CalendarDayMonthYearStyle");
             return element;
         }
 
@@ -306,20 +296,13 @@ namespace PersianDateControlsPlus
         private readonly static string[] _daysOfWeek = new string[] { "ش", "١ش", "٢ش", "٣ش", "٤ش", "٥ش", "ج" };
         void InitializeMonth()
         {
-            var style = (Style)this.FindResource("PersianDateControlsPlus.WeekDayNameLableStyle");
             for (int j = 1; j <= 7; j++)
             {
                 var element = new Label
                 {
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                    HorizontalContentAlignment = HorizontalAlignment.Center,
-                    VerticalContentAlignment = VerticalAlignment.Top,
-                    Padding = new Thickness(0),
-                    FontWeight = FontWeights.SemiBold,
-                    Style = style,
                     Content = _daysOfWeek[j - 1],
                 };
+                element.SetResourceReference(StyleProperty, "PersianDateControlsPlus.WeekDayNameLableStyle");
 
                 this._monthUniformGrid.Children.Add(element);
             }
@@ -342,6 +325,7 @@ namespace PersianDateControlsPlus
         void monthModeButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
+            if (button.Tag == null) return;
             var buttonDate = (PersianDate.PersianDate)button.Tag;
             var displayDate = this.DisplayDate;
 
@@ -376,6 +360,7 @@ namespace PersianDateControlsPlus
         void yearModeButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
+            if (button.Tag == null) return;
             int month = (int)button.Tag;
             this.SetCurrentValue(DisplayDateProperty, new PersianDate.PersianDate(this.DisplayDate.Year, month, 1));
             this.DisplayMode = CalendarMode.Month;
@@ -405,6 +390,7 @@ namespace PersianDateControlsPlus
         void decadeModeButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
+            if (button.Tag == null) return;
             this.SetCurrentValue(DisplayDateProperty, new PersianDate.PersianDate((int)button.Tag, 1, 1));
             this.DisplayMode = CalendarMode.Year;
         }
@@ -433,23 +419,8 @@ namespace PersianDateControlsPlus
             if (button.Tag != null)
             {
                 var bdate = (PersianDate.PersianDate)button.Tag;
-                if (bdate == PersianDate.PersianDate.Today)
-                {
-                    CalendarAssist.SetIsCurrentDay(button, true);
-                    CalendarAssist.SetIsSelectedDate(button, false);
-                }
-                else
-                {
-                    CalendarAssist.SetIsCurrentDay(button, false);
-                }
-                if (bdate == this.SelectedDate)
-                {
-                    CalendarAssist.SetIsSelectedDate(button, true);
-                }
-                if (bdate != this.SelectedDate && bdate != PersianDate.PersianDate.Today)
-                {
-                    CalendarAssist.SetIsSelectedDate(button, false);
-                }
+                CalendarAssist.SetIsCurrentDay(button, bdate == PersianDate.PersianDate.Today);
+                CalendarAssist.SetIsSelectedDate(button, bdate == this.SelectedDate);
             }
         }
         private void TodayCheck()
@@ -558,26 +529,26 @@ namespace PersianDateControlsPlus
                     {
                         dateInRange = false;
                     }
+
+                    CalendarAssist.SetIsOutOfSpecifiedRange(button, dateInRange == false);
+                    CalendarAssist.SetIsOutOfCurrentMonth(button, date.Month != firstDayInMonth.Month);
+                    CalendarAssist.SetIsCurrentDay(button, date == PersianDate.PersianDate.Today);
+                    CalendarAssist.SetIsSelectedDate(button, date == this.SelectedDate);
+
                     if (dateInRange && date.Month == firstDayInMonth.Month)
                     {//we're good!
-                        button.Foreground = Brushes.Black;
                         button.Content = date.Day.ToString();
-                        button.IsEnabled = true;
                         button.Tag = date;
                     }
                     else if (dateInRange)
                     {//belongs to the next, or the previous month
                         button.Content = date.Day.ToString();
-                        button.IsEnabled = true;
                         button.Tag = date;
-                        button.Foreground = Brushes.LightGray;
                     }
                     else
                     {//not in [DiplayDateStart, DiplayDateEnd] range
                         button.Tag = null;
                         button.Content = "";
-                        button.IsEnabled = false;
-                        button.Background = Brushes.Transparent;
                     }
                 }
 
