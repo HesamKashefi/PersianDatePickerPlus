@@ -117,13 +117,13 @@
                 <TextBox x:Name="PART_DateTextBoxElement"
                          Margin="1"
                          Padding="2,0,2,0"
-                         MinWidth="75"
                          Grid.Column="0"
                          Template="{DynamicResource PersianDateControlsPlus.TextBoxTemplate}"
                          BorderBrush="Transparent"
                          AcceptsReturn="False"
                          FlowDirection="LeftToRight"
                          HorizontalAlignment="Stretch"
+                         HorizontalContentAlignment="Stretch"
                          VerticalContentAlignment="Center"
                          MaxLines="1" />
                 <TextBlock Margin="1"
@@ -159,6 +159,7 @@
                         Padding="0"
                         Margin="1"
                         Width="24"
+                        ToolTip="نمایش گاهشمار"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                     <Image Source="./../OpenCalendarButtonImage.bmp"

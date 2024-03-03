@@ -42,7 +42,8 @@
                                 FontSize="14"
                                 TabIndex="0"
                                 Grid.Column="0"
-                                Margin="8, 0">◄</Button>
+                                Margin="8, 0"
+                                ToolTip="آینده">◄</Button>
                         <Button x:Name="PART_TitleButton"
                                 Style="{DynamicResource PersianDateControlsPlus.CalendarNavigationButtonStyle}"
                                 FlowDirection="RightToLeft"
@@ -50,7 +51,8 @@
                                 Height="25"
                                 FontWeight="Bold"
                                 TabIndex="0"
-                                Grid.Column="1">خرداد 1376</Button>
+                                Grid.Column="1"
+                                ToolTip="حال">خرداد 1376</Button>
                         <Button x:Name="PART_PreviousDecadeYearMonthButton"
                                 Style="{DynamicResource PersianDateControlsPlus.CalendarNavigationButtonStyle}"
                                 Height="25"
@@ -58,7 +60,8 @@
                                 FontSize="14"
                                 TabIndex="0"
                                 Grid.Column="2"
-                                Margin="8, 0">►</Button>
+                                Margin="8, 0"
+                                ToolTip="گذشته">►</Button>
                     </Grid>
                 </Border>
 
@@ -76,10 +79,12 @@
                     <Button x:Name="PART_ClearDateButton"
                             Grid.Column="0"
                             Content="پاک کردن"
+                            ToolTip="پاک کردن تاریخ انتخاب شده"
                             Style="{DynamicResource PersianDateControlsPlus.CalendarNavigationButtonStyle}" />
                     <Button x:Name="PART_GoToTodayButton"
                             Grid.Column="1"
                             Content="امروز"
+                            ToolTip="انتخاب تاریخ روز"
                             Style="{DynamicResource PersianDateControlsPlus.CalendarNavigationButtonStyle}" />
                 </Grid>
 
