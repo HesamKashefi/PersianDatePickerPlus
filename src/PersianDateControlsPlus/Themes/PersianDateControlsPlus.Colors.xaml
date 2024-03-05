@@ -7,12 +7,14 @@
 
     <Brush x:Key="PersianDateControlsPlus.HoverBackgroundBrush">LightBlue</Brush>
     <Brush x:Key="PersianDateControlsPlus.HoverForegroundBrush">RoyalBlue</Brush>
-
-    <Brush x:Key="PersianDateControlsPlus.ForegroundBrush">Black</Brush>
+    
     <Brush x:Key="PersianDateControlsPlus.PressedBrush">#77c7fc</Brush>
     <Brush x:Key="PersianDateControlsPlus.PressedBorderBrush">Lavender</Brush>
+
+    <Brush x:Key="PersianDateControlsPlus.ForegroundBrush">Black</Brush>
     <Brush x:Key="PersianDateControlsPlus.TextBoxHoverBorderBrush">LightBlue</Brush>
 
+    <Brush x:Key="PersianDateControlsPlus.ClandarBackgroundBrush">White</Brush>
     <Brush x:Key="PersianDateControlsPlus.ClandarBorderBrush">Gainsboro</Brush>
 
     <Brush x:Key="PersianDateControlsPlus.ClandarHeaderBackgroundBrush">#FFEAEEF9</Brush>
@@ -22,8 +24,10 @@
 
     <Brush x:Key="PersianDateControlsPlus.OutOfCurrenMonthDateBackgroundBrush">Transparent</Brush>
     <Brush x:Key="PersianDateControlsPlus.OutOfCurrenMonthDateForegroundBrush">Gray</Brush>
-
-    <Brush x:Key="PersianDateControlsPlus.SelectedDayMouseOverBackgroundBrush">#399cbd</Brush>
+    
     <Brush x:Key="PersianDateControlsPlus.SelectedDayBackgroundBrush">LightBlue</Brush>
     <Brush x:Key="PersianDateControlsPlus.SelectedDayForegroundBrush">Black</Brush>
+
+    <Brush x:Key="PersianDateControlsPlus.CalendarDayMouseOverForegroundBrush">White</Brush>
+    <Brush x:Key="PersianDateControlsPlus.CalendarDayMouseOverBackgroundBrush">#399cbd</Brush>
 </ResourceDictionary>

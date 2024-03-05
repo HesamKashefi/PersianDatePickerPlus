@@ -216,10 +216,10 @@
                             <MultiTrigger.Setters>
                                 <Setter TargetName="Border"
                                         Property="TextElement.Foreground"
-                                        Value="{DynamicResource PersianDateControlsPlus.SelectedDayMouseOverForegroundBrush}" />
+                                        Value="{DynamicResource PersianDateControlsPlus.CalendarDayMouseOverForegroundBrush}" />
                                 <Setter TargetName="Border"
                                         Property="Background"
-                                        Value="{DynamicResource PersianDateControlsPlus.SelectedDayMouseOverBackgroundBrush}" />
+                                        Value="{DynamicResource PersianDateControlsPlus.CalendarDayMouseOverBackgroundBrush}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
 
