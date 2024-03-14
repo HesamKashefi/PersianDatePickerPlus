@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Read the Docs
+      url: https://github.com/HesamKashefi/PersianDatePickerPlus/wiki
+      about: Be sure you've read the docs!
